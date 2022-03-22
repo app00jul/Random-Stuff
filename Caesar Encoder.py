@@ -1,5 +1,3 @@
-# Stevens Institute of Technology, 2021
-
 ##########################################
 # Name: Julian Noeske
 ##########################################
@@ -19,63 +17,45 @@ import string
 #         0: Saturday, 1: Sunday, 2: Monday, ..., 6: Friday
 ######################################################################
 
-def getWeekday():
-    date_prompt = "Please enter the 8-digit decimal number in the format of YYYYMMDD!"
-    date_prompt += "\n\tEnter here: "
-    date = input(date_prompt)
-    while len(date) != 8 or date.isnumeric() == False:
-        print("Your input is in valid! \nPlease try again!")
-        date = input(date_prompt)
-
-    while int(date)%10000//100 > 12:
-        print("\nYour month is not the correct format.")
-        print("Please try again!")
-        date = input(date_prompt)
-
-    while int(date)%10000%100 > 31:
-        print("\nYour day is not the correct format.")
-        print("Please try again!")
-        date = input(date_prompt)
-
-
+def getWeekday(date):
     year = int(date) // 10000
     month_day = int(date) % 10000
     month = month_day // 100
     day = month_day % 100
 
-    print(f"Valid input is: {date}")
-
-
-    print(f"\nThe year is \t {year}")
+    """print(f"\nThe year is \t {year}")
     print(f"The month is \t {month}")
-    print(f"The day is \t \t {day}")
+    print(f"The day is \t \t {day}")""" #this is for debugging
 
 
     if month == 1 or month == 2:
         m = month + 12
+        year = year -1
         #print(m) #this is for debugging!
     else:
         m = month
+        year = year
         #print(m) #this is for debugging!
-
-    h = (day + 13*(m + 1)//5 + year +year//4 + 5 - year//100)%7
-
+    J = year//100
+    K = year%100
+    h = (day + (13*(m + 1))//5 + K + K//4 + J//4 - 2*J)%7
+    #print(h) #this is for debugging!
     if h == 0:
-        print("The day is Saturday!")
+        return ("The day is Saturday!")
     elif h == 1:
-        print("The day is Sunday!")
+        return ("The day is Sunday!")
     elif h == 2:
-        print("The day is Monday!")
+        return ("The day is Monday!")
     elif h == 3:
-        print("The day is Tuesday!")
+        return ("The day is Tuesday!")
     elif h == 4:
-        print("The day is Wednesday!")
+        return ("The day is Wednesday!")
     elif h == 5:
-        print("The day is Thursday!")
+        return ("The day is Thursday!")
     elif h == 6:
-        print("The day is Friday!")
+        return ("The day is Friday!")
 
-getWeekday()
+print(getWeekday(20000101))
 
 
 ##############################date########################################
@@ -92,10 +72,11 @@ getWeekday()
 ######################################################################
 # This provided helper function may be useful
 # Input:  List of ASCII values (Ex: [72, 69, 76, 76, 79])
+# Output: String (Ex. 'HELLO')       'H   E   L   L   O'd helper function may be useful
+# Input:  List of ASCII values (Ex: [72, 69, 76, 76, 79])
 # Output: String (Ex. 'HELLO')       'H   E   L   L   O'
 ######################################################################
 def asciiToString(asciiList):
-    print(''.join(map(chr,asciiList)))
     return ''.join(map(chr, asciiList))
 
 ######################################################################
@@ -109,34 +90,20 @@ def asciiToString(asciiList):
 # Hint: The ord() function converts single-character strings to ASCII
 #       (Its inverse, the chr() function, is used in the provided helper)
 ######################################################################
-letters = string.ascii_uppercase
 
 def caesarEncoder(str, shift):
-    '''
     lst_convert = list(str)
     #print(lst_convert) #this is for debugging
 
     ascii_convert = map(lambda x: ord(x), lst_convert)
     #print(ascii_convert) #this is for debugging
 
-    caesar_encoder = map(lambda x: x + shift, ascii_convert)
-    asciiToString(caesar_encoder)
-    '''
-    encrypted = ""
-    for character in str:
-        if character in letters:
-            caesar_encode = ord(character) + shift
-            encode = chr(caesar_encode)
-            encrypted += encode
-        else:
-            caesar_encode = ord(character)
-            encode = chr(caesar_encode)
-            encrypted += encode
+    caesar_encoder = map(lambda x: x + shift if x != 32 else 32, ascii_convert)
 
-    print(f"Encrypted message is {encrypted}")
+    caesar_encoder_final = map(lambda x: x - 26 if x > 90 else x, caesar_encoder)
+    return asciiToString(caesar_encoder_final)
 
-
-caesarEncoder("HELLO THERE", 3)
+print(caesarEncoder("MORETESTING", 26))
 
 ######################################################################
 # Decoder
@@ -146,28 +113,15 @@ caesarEncoder("HELLO THERE", 3)
 # Hint: The chr() function converts ASCII to a single-character string
 ######################################################################
 def caesarDecoder(str, shift):
-    '''
     lst_convert = list(str)
     # print(lst_convert) #this is for debugging
 
     ascii_convert = map(lambda x: ord(x), lst_convert)
     # print(ascii_convert) #this is for debugging
 
-    caesar_encoder = map(lambda x: x - shift, ascii_convert)
-    asciiToString(caesar_encoder)
-    '''
-    decrypted = ""
-    for character in str:
-        if character in letters:
-            caesar_decode = ord(character) - shift
-            decode = chr(caesar_decode)
-            decrypted += decode
-        else:
-            caesar_decode = ord(character)
-            decode = chr(caesar_decode)
-            decrypted += decode
-
-    print(f"Decrypted message is {decrypted}")
+    caesar_decoder = map(lambda x: x - shift if x != 32 else 32, ascii_convert)
+    caesar_decoder_final = map(lambda x: x + 26 if x <65 else x, caesar_decoder)
+    return asciiToString(caesar_decoder_final)
 
 
-caesarDecoder("KHOOR ZRUOG",3)
+print(caesarDecoder("MORETESTING",26))  
