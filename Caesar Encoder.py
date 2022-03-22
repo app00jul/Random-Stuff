@@ -2,7 +2,6 @@
 
 ##########################################
 # Name: Julian Noeske
-# Pledge: I pledge my honor that I have abided by the Stevens Honor System
 ##########################################
 from math import floor  # E.g., floor(5.3) -> 5, floor(3.9) -> 3
 from functools import reduce
